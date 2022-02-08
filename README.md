@@ -60,7 +60,7 @@
     1. Пишем `/newbot` сюда: [@BotFather](https://t.me/botfather).
     2. Запоминаем `TG_API_TOKEN` токен Telegram бота.
     3. Узнаём свой *Telegram ID*, например, так:
-        1. Пишем `/start` сюда: [@username_to_id_bot](http://t.me/username_to_id_bot).
+        1. Пишем `/start` сюда: [@userinfobot](https://t.me/userinfobot).
         2. Запоминаем `TG_CHAT_ID` свой *Telegram ID*.
 
 
