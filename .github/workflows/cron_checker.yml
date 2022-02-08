@@ -1,0 +1,35 @@
+name: cron orioks checker
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "10,25,40,55 * * * *"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+          architecture: 'x64'
+      - uses: actions/cache@v2
+        id: cache-venv  # name for referring later
+        with:
+          path: ./.venv/  # what we cache: the virtualenv
+          # The cache key depends on requirements.txt
+          key: ${{ runner.os }}-venv-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-venv-
+      # Build a virtualenv, but only if it doesn't already exist
+      - run: set -eu
+      - run: python3 -m venv ./.venv && source ./.venv/bin/activate && 
+             pip install -r requirements.txt
+        if: steps.cache-venv.outputs.cache-hit != 'true'
+      # Run tests
+      # Note that you have to activate the virtualenv in every step
+      # because GitHub actions doesn't preserve the environment
+      - run: source ./.venv/bin/activate && python3 main.py
