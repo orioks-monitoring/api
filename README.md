@@ -3,8 +3,11 @@
 
 Скрипт запускается каждые 15 минут[^1] и сравнивает данные, хранящиеся на [Яндекс Диске](https://disk.yandex.ru/), с информацией от [API ORIOKS](https://orioks.gitlab.io/student-api/).
 
+_P.S. Существует [скрипт](https://github.com/llirrikk/orioks-monitoring-selenium), работающий на основе [**Selenium** WebDriver](https://www.selenium.dev/documentation/webdriver/), чье использование более рекомендуется[^2]._
 
 [^1]: > Выполнение может быть отложено в периоды высокой загрузки рабочих процессов GitHub Actions... Самый короткий интервал, с которым вы можете запускать запланированные рабочие процессы, — [каждые 15 минут](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule).
+
+[^2]: [ORIOKS STUDENT API](https://orioks.gitlab.io/student-api/) имеет ряд ограничений (не позволяет получить всю необходимую информацию), поэтому рекомендуется использовать альтернативный скрипт из [репозитория](https://github.com/llirrikk/orioks-monitoring-selenium).
 
 
 ## Использование
@@ -38,7 +41,7 @@
         env YANDEX_DISK_TOKEN="YANDEX_DISK_access_token" setup/create_folder_yandex_disk.sh
         ```
 
-4. [^2]Получение [API токена от паблика VK](https://dev.vk.com/)
+4. [^3]Получение [API токена от паблика VK](https://dev.vk.com/)
     1. Создание группы ВК
         - Выбираем `"Группа по интересам"`.
         - *Название*: `ЛЮБОЕ`.
@@ -56,17 +59,17 @@
         2. Запоминаем `VK_PEER_ID` свой *VK ID*.
 
 
-5. [^2]Получение [API токена для Telegram бота](https://core.telegram.org/bots/api)
+5. [^3]Получение [API токена для Telegram бота](https://core.telegram.org/bots/api)
     1. Пишем `/newbot` сюда: [@BotFather](https://t.me/botfather).
     2. Запоминаем `TG_API_TOKEN` токен Telegram бота.
     3. Узнаём свой *Telegram ID*, например, так:
-        1. Пишем `/start` сюда: [@username_to_id_bot](http://t.me/username_to_id_bot).
+        1. Пишем `/start` сюда: [@userinfobot](https://t.me/userinfobot).
         2. Запоминаем `TG_CHAT_ID` свой *Telegram ID*.
 
 
 6. Настроить выполнение скрипта на [GitHub Actions](https://github.com/features/actions).
     1. Сделать **Fork** [репозитория](https://github.com/llirrikk/orioks-monitoring).
-    2. Включить **Actions** в репозитории своего профиля, нажав на кнопку: *I understand my workflows, go ahead and enable them*.
+    2. Включить **Actions** в репозитории своего профиля, нажав на кнопку: *I understand my workflows, go ahead and enable them*, затем на кнопку *Enable workflow*.
     3. Перейти в *Settings* -> *Secrets* -> *Actions* -> *New repository secret* и добавить все полученные на прошлих шагах значения: 
         - `ORIOKS_API_TOKEN`, `YANDEX_DISK_API_TOKEN`,
         - `VK_API_TOKEN`, `VK_PEER_ID` и/или[^2] `TG_API_TOKEN`, `TG_CHAT_ID`,
@@ -74,4 +77,4 @@
         - `TG_USE` (*True*, если использовать сервис Telegram, *False* -- в противном случае).
 
 
-[^2]: Необходимо выбрать хотя бы один сервис: [ВКонтакте](https://vk.com/) или [Telegram](https://telegram.org/) (то есть выбрать 4 или 5 пункт, либо и 4, и 5).
+[^3]: Необходимо выбрать хотя бы один сервис: [ВКонтакте](https://vk.com/) или [Telegram](https://telegram.org/) (то есть выбрать 4 или 5 пункт, либо и 4, и 5).
